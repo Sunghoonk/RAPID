@@ -54,6 +54,7 @@ validate_expected_columns_mapping <- function(schema, rapids_schema, sensor, rap
   columns <- names(schema[[sensor]][["RAPIDS_COLUMN_MAPPINGS"]])
   rapids_columns <- rapids_schema[[sensor]]
 
+
   if(is.null(rapids_columns))
     stop(paste(sensor, " columns are not listed in RAPIDS' column specification. If you are adding support for a new phone sensor, add any mandatory columns in ", rapids_schema_file))
   if(length(setdiff(rapids_columns, columns)) > 0)
@@ -105,6 +106,8 @@ pull_wearable_data_main <- function(){
   device_type <- snakemake@params[["device_type"]]
   sensor <- toupper(snakemake@params[["sensor"]])
   output_data_file <- snakemake@output[[1]]
+
+  print(stream_format)
 
 
   validate_participant_file_without_device_ids(participant_file)

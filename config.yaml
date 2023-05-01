@@ -3,7 +3,7 @@
 ########################################################################################################################
 
 # See https://www.rapids.science/latest/setup/configuration/#participant-files
-PIDS: [test01]
+PIDS: [person1]
 
 # See https://www.rapids.science/latest/setup/configuration/#automatic-creation-of-participant-files
 CREATE_PARTICIPANT_FILES:
@@ -15,6 +15,9 @@ CREATE_PARTICIPANT_FILES:
     ADD: True
     IGNORED_DEVICE_IDS: []
   EMPATICA_SECTION:
+    ADD: True
+    IGNORED_DEVICE_IDS: []
+  GALAXYFIT_SECTION:
     ADD: True
     IGNORED_DEVICE_IDS: []
 
@@ -43,7 +46,7 @@ TIMEZONE:
 
 # See https://www.rapids.science/latest/setup/configuration/#data-stream-configuration
 PHONE_DATA_STREAMS:
-  USE: aware_mysql
+  USE: aware_csv
   
   # AVAILABLE:
   aware_mysql: 
@@ -177,7 +180,7 @@ PHONE_BLUETOOTH:
 
 # See https://www.rapids.science/latest/features/phone-calls/
 PHONE_CALLS:
-  CONTAINER: calls
+  CONTAINER: calls.csv
   PROVIDERS:
     RAPIDS:
       COMPUTE: False
@@ -325,7 +328,7 @@ PHONE_WIFI_VISIBLE:
 
 # See https://www.rapids.science/latest/setup/configuration/#data-stream-configuration
 FITBIT_DATA_STREAMS:
-  USE: fitbitjson_mysql
+  USE: fitbitjson_csv
   
   # AVAILABLE:
   fitbitjson_mysql: 
@@ -373,7 +376,7 @@ FITBIT_DATA_YIELD:
 
 # See https://www.rapids.science/latest/features/fitbit-heartrate-summary/
 FITBIT_HEARTRATE_SUMMARY:
-  CONTAINER: heartrate_summary
+  CONTAINER: fitbit_data.csv
   PROVIDERS:
     RAPIDS:
       COMPUTE: False
@@ -469,7 +472,7 @@ EMPATICA_DATA_STREAMS:
   
   # AVAILABLE:
   empatica_zip: 
-    FOLDER: data/external/empatica
+    FOLDER: data/external/empatica_zip
 
 # Sensors ------
 
@@ -576,7 +579,7 @@ ALL_CLEANING_INDIVIDUAL:
     RAPIDS:
       COMPUTE: False
       IMPUTE_SELECTED_EVENT_FEATURES:
-        COMPUTE: True
+        COMPUTE: False
         MIN_DATA_YIELDED_MINUTES_TO_IMPUTE: 0.33
       COLS_NAN_THRESHOLD: 0.3 # set to 1 to disable
       COLS_VAR_THRESHOLD: True
@@ -606,3 +609,25 @@ ALL_CLEANING_OVERALL:
         MIN_OVERLAP_FOR_CORR_THRESHOLD: 0.5
         CORR_THRESHOLD: 0.95
       SRC_SCRIPT: src/features/all_cleaning_overall/rapids/main.R
+
+########################################################################################################################
+#                                                Galaxyfit                                                            #
+########################################################################################################################
+
+GALAXYFIT_DATA_STREAMS:
+  USE: galaxyfit_csv 
+  
+  # AVAILABLE:
+  galaxyfit_csv:
+    FOLDER: data/external/galaxyfit_csv
+
+
+GALAXYFIT_HEARTRATE:
+  CONTAINER: heart_rate.csv
+  PROVIDERS:
+    RAPIDS:
+      COMPUTE: True
+      FEATURES: [] 
+      SRC_SCRIPT: src/features/galaxyfit_heartrate/rapids/main.py
+
+
