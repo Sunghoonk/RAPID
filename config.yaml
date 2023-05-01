@@ -626,8 +626,15 @@ GALAXYFIT_HEARTRATE:
   CONTAINER: heart_rate.csv
   PROVIDERS:
     RAPIDS:
-      COMPUTE: True
+      COMPUTE: False
       FEATURES: [] 
       SRC_SCRIPT: src/features/galaxyfit_heartrate/rapids/main.py
 
+GALAXYFIT_STEPCOUNT:
+  CONTAINER: step_count.csv
+  PROVIDERS:
+    RAPIDS:
+      COMPUTE: True
+      FEATURES: [] 
+      SRC_SCRIPT: src/features/galaxyfit_stepcount/rapids/main.py
 

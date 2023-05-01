@@ -954,6 +954,19 @@ rule galaxyfit_heartrate_python_features:
     script:
         "../src/features/entry.py"
 
+rule galaxyfit_stepcount_python_features:
+    input:
+        sensor_data = "data/raw/{pid}/galaxyfit_stepcount_with_datetime.csv",
+        time_segments_labels = "data/interim/time_segments/{pid}_time_segments_labels.csv"
+    params:
+        provider = lambda wildcards: config["GALAXYFIT_STEPCOUNT"]["PROVIDERS"][wildcards.provider_key.upper()],
+        provider_key = "{provider_key}",
+        sensor_key = "galaxyfit_stepcount"
+    output:
+        "data/interim/{pid}/galaxyfit_stepcount_features/galaxyfit_stepcount_python_{provider_key}.csv"
+    script:
+        "../src/features/entry.py"
+
 rule merge_sensor_features_for_individual_participants:
     input:
         feature_files = input_merge_sensor_features_for_individual_participants

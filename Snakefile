@@ -378,11 +378,19 @@ if isinstance(config["EMPATICA_TAGS"]["PROVIDERS"], dict):
 # for galaxyfit
 for provider in config["GALAXYFIT_HEARTRATE"]["PROVIDERS"].keys():
     if config["GALAXYFIT_HEARTRATE"]["PROVIDERS"][provider]["COMPUTE"]:
-# print("extend files galaxyfit")
         files_to_compute.extend(expand("data/raw/{pid}/galaxyfit_heartrate_raw.csv", pid=config["PIDS"]))
         files_to_compute.extend(expand("data/raw/{pid}/galaxyfit_heartrate_with_datetime.csv", pid=config["PIDS"]))
         files_to_compute.extend(expand("data/interim/{pid}/galaxyfit_heartrate_features/galaxyfit_heartrate_{language}_{provider_key}.csv", pid=config["PIDS"], language=get_script_language(config["GALAXYFIT_HEARTRATE"]["PROVIDERS"][provider]["SRC_SCRIPT"]), provider_key=provider.lower()))
         files_to_compute.extend(expand("data/processed/features/{pid}/galaxyfit_heartrate.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/processed/features/{pid}/all_sensor_features.csv", pid=config["PIDS"]))
+        files_to_compute.append("data/processed/features/all_participants/all_sensor_features.csv")
+
+for provider in config["GALAXYFIT_STEPCOUNT"]["PROVIDERS"].keys():
+    if config["GALAXYFIT_STEPCOUNT"]["PROVIDERS"][provider]["COMPUTE"]:
+        files_to_compute.extend(expand("data/raw/{pid}/galaxyfit_stepcount_raw.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/raw/{pid}/galaxyfit_stepcount_with_datetime.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/interim/{pid}/galaxyfit_stepcount_features/galaxyfit_stepcount_{language}_{provider_key}.csv", pid=config["PIDS"], language=get_script_language(config["GALAXYFIT_STEPCOUNT"]["PROVIDERS"][provider]["SRC_SCRIPT"]), provider_key=provider.lower()))
+        files_to_compute.extend(expand("data/processed/features/{pid}/galaxyfit_stepcount.csv", pid=config["PIDS"]))
         files_to_compute.extend(expand("data/processed/features/{pid}/all_sensor_features.csv", pid=config["PIDS"]))
         files_to_compute.append("data/processed/features/all_participants/all_sensor_features.csv")
 
