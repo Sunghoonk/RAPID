@@ -3,7 +3,9 @@
 ########################################################################################################################
 
 # See https://www.rapids.science/latest/setup/configuration/#participant-files
-PIDS: [person1]
+# PIDS: [example01] # test fitbit
+# PIDS: [empatica] # test empatica
+PIDS: [person1] # test galaxyfit
 
 # See https://www.rapids.science/latest/setup/configuration/#automatic-creation-of-participant-files
 CREATE_PARTICIPANT_FILES:
@@ -31,7 +33,7 @@ TIME_SEGMENTS: &time_segments
 TIMEZONE: 
     TYPE: SINGLE
     SINGLE:
-      TZCODE: America/New_York
+      TZCODE: Asia/Seoul
     MULTIPLE:
       TZCODES_FILE: data/external/multiple_timezones_example.csv
       IF_MISSING_TZCODE: STOP
@@ -626,7 +628,7 @@ GALAXYFIT_HEARTRATE:
   CONTAINER: heart_rate.csv
   PROVIDERS:
     RAPIDS:
-      COMPUTE: False
+      COMPUTE: True
       FEATURES: [] 
       SRC_SCRIPT: src/features/galaxyfit_heartrate/rapids/main.py
 
@@ -634,7 +636,26 @@ GALAXYFIT_STEPCOUNT:
   CONTAINER: step_count.csv
   PROVIDERS:
     RAPIDS:
-      COMPUTE: True
+      COMPUTE: False
       FEATURES: [] 
       SRC_SCRIPT: src/features/galaxyfit_stepcount/rapids/main.py
 
+########################################################################################################################
+#                                                AppleWatch                                                            #
+########################################################################################################################
+
+APPLE_DATA_STREAMS:
+  USE: apple_csv 
+  
+  # AVAILABLE:
+  apple_csv:
+    FOLDER: data/external/apple_csv
+
+
+APPLE_HEARTRATE:
+  CONTAINER: apple_health.csv
+  PROVIDERS:
+    RAPIDS:
+      COMPUTE: False
+      FEATURES: [] 
+      SRC_SCRIPT: src/features/apple_heartrate/rapids/main.py

@@ -49,6 +49,7 @@ validate_user_timezones <- function(timezone_parameters){
 }
 
 create_mising_temporal_column <- function(data, device_type){
+
   if(device_type == "fitbit" && all(data$timestamp == 0) && "local_date_time" %in% colnames(data)){
       # For fibit we infere timestamp from Fitbit's local date time only right after pulling it
       if(nrow(data) == 0)
@@ -71,7 +72,8 @@ create_mising_temporal_column <- function(data, device_type){
           group_by(local_timezone) %>% 
           nest() %>% 
           mutate(data = map2(data, local_timezone, function(nested_data, tz){
-            return(nested_data %>%  mutate(local_date_time = format(as_datetime(timestamp / 1000, tz=tz), format="%Y-%m-%d %H:%M:%S")) %>% drop_na(local_date_time) )
+            # return(nested_data %>%  mutate(local_date_time = format(as_datetime(timestamp / 1000, tz=tz), format="%Y-%m-%d %H:%M:%S")) %>% drop_na(local_date_time) )
+            return(nested_data %>%  mutate(local_date_time = format(as_datetime(timestamp, tz=tz), format="%Y-%m-%d %H:%M:%S")) %>% drop_na(local_date_time) )
             })) %>% 
           unnest(cols = everything()) %>% 
           ungroup())

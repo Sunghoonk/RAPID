@@ -48,21 +48,31 @@ def pull_data(data_configuration, device, sensor, container, columns_to_download
         df.rename(columns = {'com.samsung.health.heart_rate.heart_rate' : 'heartrate'}, inplace = True)
 
         participant_data = pd.DataFrame(df['timestamp'], columns=['timestamp'])
+        # participant_data = pd.DataFrame(df['local_date_time'], columns=['local_date_time'])
         participant_data['device_id'] = df['device_id']
         participant_data['heartrate'] = df['heartrate']
     
     if sensor == "GALAXYFIT_STEPCOUNT":
         df = pd.DataFrame(csv_list, columns = colunm)
+
         df.rename(columns = {'com.samsung.health.step_count.start_time' : 'timestamp'}, inplace = True)
         df.rename(columns = {'com.samsung.health.step_count.count' : 'step_count'}, inplace = True)
         df.rename(columns = {'com.samsung.health.step_count.distance' : 'distance'}, inplace = True)
         df.rename(columns = {'com.samsung.health.step_count.deviceuuid' : 'device_id'}, inplace = True)
 
         participant_data = pd.DataFrame(df['timestamp'], columns=['timestamp'])
+        # participant_data = pd.DataFrame(df['local_date_time'], columns=['local_date_time'])
         participant_data['step_count'] = df['step_count']
         participant_data['distance'] = df['distance']
         participant_data['device_id'] = df['device_id']
 
+    len = participant_data.shape[0]
+    # print(len)
 
+    for i in range(len):
+      temp = participant_data['timestamp'][i]
+      participant_data['timestamp'][i] = temp.replace(".000", "")
+
+    print(participant_data['timestamp'][0])
     return(participant_data)
 

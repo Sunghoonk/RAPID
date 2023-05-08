@@ -2,7 +2,7 @@ rule join_features_from_providers:
     input:
         sensor_features = find_features_files
     wildcard_constraints:
-        sensor_key = '(phone|fitbit|empatica|galaxyfit).*'
+        sensor_key = '(phone|fitbit|empatica|galaxyfit|apple).*'
     output:
         "data/processed/features/{pid}/{sensor_key}.csv"
     script:
@@ -964,6 +964,19 @@ rule galaxyfit_stepcount_python_features:
         sensor_key = "galaxyfit_stepcount"
     output:
         "data/interim/{pid}/galaxyfit_stepcount_features/galaxyfit_stepcount_python_{provider_key}.csv"
+    script:
+        "../src/features/entry.py"
+
+rule apple_heartrate_python_features:
+    input:
+        sensor_data = "data/raw/{pid}/apple_heartrate_with_datetime.csv",
+        time_segments_labels = "data/interim/time_segments/{pid}_time_segments_labels.csv"
+    params:
+        provider = lambda wildcards: config["APPLE_HEARTRATE"]["PROVIDERS"][wildcards.provider_key.upper()],
+        provider_key = "{provider_key}",
+        sensor_key = "apple_heartrate"
+    output:
+        "data/interim/{pid}/apple_heartrate_features/apple_heartrate_python_{provider_key}.csv"
     script:
         "../src/features/entry.py"
 

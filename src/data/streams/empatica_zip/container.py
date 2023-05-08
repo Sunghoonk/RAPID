@@ -85,6 +85,9 @@ def pull_data(data_configuration, device, sensor, container, columns_to_download
     participant_data.set_index('timestamp', inplace=True)
 
     available_zipfiles = list((Path(data_configuration["FOLDER"]) / Path(device)).rglob("*.zip"))
+    
+    print(available_zipfiles)
+
     if len(available_zipfiles) == 0:
         warnings.warn("There were no zip files in: {}. If you were expecting data for this participant the [EMPATICA][DEVICE_IDS] key in their participant file is missing the pid".format((Path(data_configuration["FOLDER"]) / Path(device))))
 

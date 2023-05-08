@@ -394,6 +394,17 @@ for provider in config["GALAXYFIT_STEPCOUNT"]["PROVIDERS"].keys():
         files_to_compute.extend(expand("data/processed/features/{pid}/all_sensor_features.csv", pid=config["PIDS"]))
         files_to_compute.append("data/processed/features/all_participants/all_sensor_features.csv")
 
+# for apple
+for provider in config["APPLE_HEARTRATE"]["PROVIDERS"].keys():
+    if config["APPLE_HEARTRATE"]["PROVIDERS"][provider]["COMPUTE"]:
+        files_to_compute.extend(expand("data/raw/{pid}/apple_heartrate_raw.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/raw/{pid}/apple_heartrate_with_datetime.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/interim/{pid}/apple_heartrate_features/apple_heartrate_{language}_{provider_key}.csv", pid=config["PIDS"], language=get_script_language(config["APPLE_HEARTRATE"]["PROVIDERS"][provider]["SRC_SCRIPT"]), provider_key=provider.lower()))
+        files_to_compute.extend(expand("data/processed/features/{pid}/apple_heartrate.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/processed/features/{pid}/all_sensor_features.csv", pid=config["PIDS"]))
+        files_to_compute.append("data/processed/features/all_participants/all_sensor_features.csv")
+
+
 # Visualization for Data Exploration
 if config["HISTOGRAM_PHONE_DATA_YIELD"]["PLOT"]:
     files_to_compute.append("reports/data_exploration/histogram_phone_data_yield.html")

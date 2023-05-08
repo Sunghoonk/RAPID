@@ -1,6 +1,7 @@
 GALAXYFIT_HEARTRATE: 
   RAPIDS_COLUMN_MAPPINGS:
     TIMESTAMP: timestamp
+    # LOCAL_DATE_TIME: local_date_time
     DEVICE_ID: device_id
     HEARTRATE: heartrate
   MUTATION:
@@ -10,6 +11,7 @@ GALAXYFIT_HEARTRATE:
 GALAXYFIT_STEPCOUNT: 
   RAPIDS_COLUMN_MAPPINGS:
     TIMESTAMP: timestamp
+    # LOCAL_DATE_TIME: local_date_time
     DEVICE_ID: device_id
     STEPCOUNT: step_count
     DISTANCE: distance

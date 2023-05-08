@@ -1,0 +1,9 @@
+APPLE_HEARTRATE: 
+  RAPIDS_COLUMN_MAPPINGS:
+    TIMESTAMP: timestamp
+    DEVICE_ID: device_id
+    HEARTRATE: heartrate
+  MUTATION:
+    COLUMN_MAPPINGS:
+    SCRIPTS: 
+
