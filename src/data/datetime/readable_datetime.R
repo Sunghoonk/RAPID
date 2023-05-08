@@ -64,6 +64,19 @@ create_mising_temporal_column <- function(data, device_type){
             })) %>% 
           unnest(cols = everything()) %>% 
           ungroup())
+    } else if(device_type == "galaxyfit"){
+      # For galaxyfit
+      if(nrow(data) == 0)
+        return(data %>% mutate(local_date_time = NA_character_) %>% relocate(local_timezone)) # move local_timezone to the beginning of df to match column positions when data is not empty (group > nest)
+      return(data %>% 
+          group_by(local_timezone) %>% 
+          nest() %>% 
+          mutate(data = map2(data, local_timezone, function(nested_data, tz){
+            return(nested_data %>%  mutate(timestamp = as.numeric(ymd_hms(local_date_time, tz=tz)) * 1000) %>% drop_na(timestamp))
+            # return(nested_data %>%  mutate(local_date_time = format(as_datetime(timestamp, tz=tz), format="%Y-%m-%d %H:%M:%S")) %>% drop_na(local_date_time) )
+            })) %>% 
+          unnest(cols = everything()) %>% 
+          ungroup())
     } else {
       # For the rest of devices we infere local date time from timestamp
       if(nrow(data) == 0)
@@ -72,8 +85,8 @@ create_mising_temporal_column <- function(data, device_type){
           group_by(local_timezone) %>% 
           nest() %>% 
           mutate(data = map2(data, local_timezone, function(nested_data, tz){
-            # return(nested_data %>%  mutate(local_date_time = format(as_datetime(timestamp / 1000, tz=tz), format="%Y-%m-%d %H:%M:%S")) %>% drop_na(local_date_time) )
-            return(nested_data %>%  mutate(local_date_time = format(as_datetime(timestamp, tz=tz), format="%Y-%m-%d %H:%M:%S")) %>% drop_na(local_date_time) )
+            return(nested_data %>%  mutate(local_date_time = format(as_datetime(timestamp / 1000, tz=tz), format="%Y-%m-%d %H:%M:%S")) %>% drop_na(local_date_time) )
+            # return(nested_data %>%  mutate(local_date_time = format(as_datetime(timestamp, tz=tz), format="%Y-%m-%d %H:%M:%S")) %>% drop_na(local_date_time) )
             })) %>% 
           unnest(cols = everything()) %>% 
           ungroup())

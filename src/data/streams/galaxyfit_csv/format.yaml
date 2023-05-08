@@ -1,17 +1,18 @@
 GALAXYFIT_HEARTRATE: 
   RAPIDS_COLUMN_MAPPINGS:
-    TIMESTAMP: timestamp
-    # LOCAL_DATE_TIME: local_date_time
+    TIMESTAMP: FLAG_TO_MUTATE
+    LOCAL_DATE_TIME: local_date_time
     DEVICE_ID: device_id
     HEARTRATE: heartrate
   MUTATION:
     COLUMN_MAPPINGS:
     SCRIPTS: 
+      - src/data/streams/mutations/galaxyfit/add_zero_timestamp.py
 
 GALAXYFIT_STEPCOUNT: 
   RAPIDS_COLUMN_MAPPINGS:
-    TIMESTAMP: timestamp
-    # LOCAL_DATE_TIME: local_date_time
+    TIMESTAMP: FLAG_TO_MUTATE
+    LOCAL_DATE_TIME: local_date_time
     DEVICE_ID: device_id
     STEPCOUNT: step_count
     DISTANCE: distance

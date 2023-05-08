@@ -3,9 +3,9 @@
 ########################################################################################################################
 
 # See https://www.rapids.science/latest/setup/configuration/#participant-files
-# PIDS: [example01] # test fitbit
+PIDS: [example01] # test fitbit
 # PIDS: [empatica] # test empatica
-PIDS: [person1] # test galaxyfit
+# PIDS: [person1] # test galaxyfit
 
 # See https://www.rapids.science/latest/setup/configuration/#automatic-creation-of-participant-files
 CREATE_PARTICIPANT_FILES:
@@ -381,13 +381,14 @@ FITBIT_HEARTRATE_SUMMARY:
   CONTAINER: fitbit_data.csv
   PROVIDERS:
     RAPIDS:
-      COMPUTE: False
-      FEATURES: ["maxrestinghr", "minrestinghr", "avgrestinghr", "medianrestinghr", "moderestinghr", "stdrestinghr", "diffmaxmoderestinghr", "diffminmoderestinghr", "entropyrestinghr"] # calories features' accuracy depend on the accuracy of the participants fitbit profile (e.g. height, weight) use these with care: ["sumcaloriesoutofrange", "maxcaloriesoutofrange", "mincaloriesoutofrange", "avgcaloriesoutofrange", "mediancaloriesoutofrange", "stdcaloriesoutofrange", "entropycaloriesoutofrange", "sumcaloriesfatburn", "maxcaloriesfatburn", "mincaloriesfatburn", "avgcaloriesfatburn", "mediancaloriesfatburn", "stdcaloriesfatburn", "entropycaloriesfatburn", "sumcaloriescardio", "maxcaloriescardio", "mincaloriescardio", "avgcaloriescardio", "mediancaloriescardio", "stdcaloriescardio", "entropycaloriescardio", "sumcaloriespeak", "maxcaloriespeak", "mincaloriespeak", "avgcaloriespeak", "mediancaloriespeak", "stdcaloriespeak", "entropycaloriespeak"]
+      COMPUTE: True
+      FEATURES: ["maxrestinghr", "minrestinghr"] 
+      # FEATURES: ["maxrestinghr", "minrestinghr", "avgrestinghr", "medianrestinghr", "moderestinghr", "stdrestinghr", "diffmaxmoderestinghr", "diffminmoderestinghr", "entropyrestinghr"] 
       SRC_SCRIPT: src/features/fitbit_heartrate_summary/rapids/main.py
 
 # See https://www.rapids.science/latest/features/fitbit-heartrate-intraday/
 FITBIT_HEARTRATE_INTRADAY:
-  CONTAINER: heartrate_intraday
+  CONTAINER: fitbit_data.csv
   PROVIDERS:
     RAPIDS:
       COMPUTE: False
@@ -560,7 +561,7 @@ HEATMAP_SENSORS_PER_MINUTE_PER_TIME_SEGMENT:
 # See https://www.rapids.science/latest/visualizations/data-quality-visualizations/#4-heatmap-of-sensor-row-count
 HEATMAP_SENSOR_ROW_COUNT_PER_TIME_SEGMENT:
   PLOT: False
-  SENSORS: []
+  SENSORS: [FITBIT_HEARTRATE_INTRADAY]
 
 # Features ------
 
@@ -571,7 +572,9 @@ HEATMAP_FEATURE_CORRELATION_MATRIX:
   CORR_THRESHOLD: 0.1
   CORR_METHOD: "pearson" # choose from {"pearson", "kendall", "spearman"}
 
-
+LINE_FEATURE:
+  PLOT: True
+ 
 ########################################################################################################################
 #                                                    Data Cleaning                                                     #
 ########################################################################################################################
@@ -623,13 +626,13 @@ GALAXYFIT_DATA_STREAMS:
   galaxyfit_csv:
     FOLDER: data/external/galaxyfit_csv
 
-
 GALAXYFIT_HEARTRATE:
   CONTAINER: heart_rate.csv
   PROVIDERS:
     RAPIDS:
-      COMPUTE: True
-      FEATURES: [] 
+      COMPUTE: False
+      FEATURES: ["maxrestinghr", "minrestinghr"] 
+      # FEATURES: ["maxrestinghr", "minrestinghr", "avgrestinghr", "medianrestinghr", "moderestinghr", "stdrestinghr", "diffmaxmoderestinghr", "diffminmoderestinghr", "entropyrestinghr"] 
       SRC_SCRIPT: src/features/galaxyfit_heartrate/rapids/main.py
 
 GALAXYFIT_STEPCOUNT:

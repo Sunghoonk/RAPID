@@ -79,3 +79,12 @@ rule heatmap_feature_correlation_matrix:
     script:
         "../src/visualization/heatmap_feature_correlation_matrix.py"
 
+rule line_feature:
+    input:
+        all_sensor_features = "data/processed/features/all_participants/all_sensor_features.csv" # before data cleaning
+    params:
+        time_segments_type = config["TIME_SEGMENTS"]["TYPE"],
+    output:
+        "reports/data_exploration/line_feature.html"
+    script:
+        "../src/visualization/line_feature.py"

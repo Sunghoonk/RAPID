@@ -7,15 +7,7 @@ def statsFeatures(heartrate_data, features, features_type, heartrate_features):
     if features_type == "hr":
         col_name = "heartrate"
     elif features_type == "restinghr":
-        col_name = "heartrate_daily_restinghr"
-    elif features_type == "caloriesoutofrange":
-        col_name = "heartrate_daily_caloriesoutofrange"
-    elif features_type == "caloriesfatburn":
-        col_name = "heartrate_daily_caloriesfatburn"
-    elif features_type == "caloriescardio":
-        col_name = "heartrate_daily_caloriescardio"
-    elif features_type == "caloriespeak":
-        col_name = "heartrate_daily_caloriespeak"
+        col_name = "heartrate"
     else:
         raise ValueError("features_type can only be one of ['hr', 'restinghr', 'caloriesoutofrange', 'caloriesfatburn', 'caloriescardio', 'caloriespeak'].")
 
@@ -25,20 +17,6 @@ def statsFeatures(heartrate_data, features, features_type, heartrate_features):
         heartrate_features["max" + features_type] = heartrate_data[["local_segment", col_name]].groupby(["local_segment"])[col_name].max()
     if "min" + features_type in features:
         heartrate_features["min" + features_type] = heartrate_data[["local_segment", col_name]].groupby(["local_segment"])[col_name].min()
-    if "avg" + features_type in features:
-        heartrate_features["avg" + features_type] = heartrate_data[["local_segment", col_name]].groupby(["local_segment"])[col_name].mean()
-    if "median" + features_type in features:
-        heartrate_features["median" + features_type] = heartrate_data[["local_segment", col_name]].groupby(["local_segment"])[col_name].median()
-    if "mode" + features_type in features:
-        heartrate_features["mode" + features_type] = heartrate_data[["local_segment", col_name]].groupby(["local_segment"])[col_name].agg(lambda x: None if len(pd.Series.mode(x)) == 0 else pd.Series.mode(x)[0])
-    if "std" + features_type in features:
-        heartrate_features["std" + features_type] = heartrate_data[["local_segment", col_name]].groupby(["local_segment"])[col_name].std()
-    if "diffmaxmode" + features_type in features:
-        heartrate_features["diffmaxmode" + features_type] = heartrate_data[["local_segment", col_name]].groupby(["local_segment"])[col_name].max() - heartrate_data[["local_segment", col_name]].groupby(["local_segment"])[col_name].agg(lambda x: None if len(pd.Series.mode(x)) == 0 else pd.Series.mode(x)[0])
-    if "diffminmode" + features_type in features:
-        heartrate_features["diffminmode" + features_type] = heartrate_data[["local_segment", col_name]].groupby(["local_segment"])[col_name].agg(lambda x: None if len(pd.Series.mode(x)) == 0 else pd.Series.mode(x)[0]) - heartrate_data[["local_segment", col_name]].groupby(["local_segment"])[col_name].min()
-    if "entropy" + features_type in features:
-        heartrate_features["entropy" + features_type] = heartrate_data[["local_segment", col_name]].groupby(["local_segment"])[col_name].agg(entropy)
     
     return heartrate_features
 
@@ -50,10 +28,10 @@ def extractHRFeaturesFromSummaryData(heartrate_summary_data, summary_features):
 
     # get stats of calories features
     # calories features might be inaccurate: they depend on users' fitbit profile (weight, height, etc.)
-    heartrate_summary_features = statsFeatures(heartrate_summary_data, summary_features, "caloriesoutofrange", heartrate_summary_features)
-    heartrate_summary_features = statsFeatures(heartrate_summary_data, summary_features, "caloriesfatburn", heartrate_summary_features)
-    heartrate_summary_features = statsFeatures(heartrate_summary_data, summary_features, "caloriescardio", heartrate_summary_features)
-    heartrate_summary_features = statsFeatures(heartrate_summary_data, summary_features, "caloriespeak", heartrate_summary_features)
+    # heartrate_summary_features = statsFeatures(heartrate_summary_data, summary_features, "caloriesoutofrange", heartrate_summary_features)
+    # heartrate_summary_features = statsFeatures(heartrate_summary_data, summary_features, "caloriesfatburn", heartrate_summary_features)
+    # heartrate_summary_features = statsFeatures(heartrate_summary_data, summary_features, "caloriescardio", heartrate_summary_features)
+    # heartrate_summary_features = statsFeatures(heartrate_summary_data, summary_features, "caloriespeak", heartrate_summary_features)
 
     heartrate_summary_features.reset_index(inplace=True)
     
