@@ -2,8 +2,12 @@ import pandas as pd
 import plotly.express as px
 
 
+print("-----------------------------------------------------------------------")
+print("target file: ", snakemake.input[0])
+print("-----------------------------------------------------------------------")
+
 time_segments_type = snakemake.params["time_segments_type"]
-phone_data_yield = pd.read_csv(snakemake.input[0])
+phone_data_yield = pd.read_csv(snakemake.input[0]) # "data/processed/features/all_participants/all_sensor_features.csv"
 
 if time_segments_type == "FREQUENCY":
     phone_data_yield["local_segment_label"] = phone_data_yield["local_segment_label"].str[:-4]

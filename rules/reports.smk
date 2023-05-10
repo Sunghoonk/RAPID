@@ -81,10 +81,11 @@ rule heatmap_feature_correlation_matrix:
 
 rule line_feature:
     input:
-        all_sensor_features = "data/processed/features/all_participants/all_sensor_features.csv" # before data cleaning
+		"data/raw/person1/galaxyfit_heartrate_raw.csv" 
     params:
-        time_segments_type = config["TIME_SEGMENTS"]["TYPE"],
+        time_segments_type = config["TIME_SEGMENTS"]["TYPE"]
     output:
-        "reports/data_exploration/line_feature.html"
+        "reports/data_exploration/line_feature.png"
     script:
         "../src/visualization/line_feature.py"
+

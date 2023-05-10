@@ -426,7 +426,7 @@ if config["HEATMAP_FEATURE_CORRELATION_MATRIX"]["PLOT"]:
     files_to_compute.append("reports/data_exploration/heatmap_feature_correlation_matrix.html")
 
 if config["LINE_FEATURE"]["PLOT"]:
-    files_to_compute.append("reports/data_exploration/line_feature.html")
+    files_to_compute.append("reports/data_exploration/line_feature.png")
 
 # Data Cleaning
 for provider in config["ALL_CLEANING_INDIVIDUAL"]["PROVIDERS"].keys():
