@@ -967,6 +967,32 @@ rule galaxyfit_stepcount_python_features:
     script:
         "../src/features/entry.py"
 
+rule galaxyfit_sleep_python_features:
+    input:
+        sensor_data = "data/raw/{pid}/galaxyfit_sleep_with_datetime.csv",
+        time_segments_labels = "data/interim/time_segments/{pid}_time_segments_labels.csv"
+    params:
+        provider = lambda wildcards: config["GALAXYFIT_SLEEP"]["PROVIDERS"][wildcards.provider_key.upper()],
+        provider_key = "{provider_key}",
+        sensor_key = "galaxyfit_sleep"
+    output:
+        "data/interim/{pid}/galaxyfit_sleep_features/galaxyfit_sleep_python_{provider_key}.csv"
+    script:
+        "../src/features/entry.py"
+
+rule galaxyfit_sleepstage_python_features:
+    input:
+        sensor_data = "data/raw/{pid}/galaxyfit_sleepstage_with_datetime.csv",
+        time_segments_labels = "data/interim/time_segments/{pid}_time_segments_labels.csv"
+    params:
+        provider = lambda wildcards: config["GALAXYFIT_SLEEPSTAGE"]["PROVIDERS"][wildcards.provider_key.upper()],
+        provider_key = "{provider_key}",
+        sensor_key = "galaxyfit_sleepstage"
+    output:
+        "data/interim/{pid}/galaxyfit_sleepstage_features/galaxyfit_sleepstage_python_{provider_key}.csv"
+    script:
+        "../src/features/entry.py"
+
 rule apple_heartrate_python_features:
     input:
         sensor_data = "data/raw/{pid}/apple_heartrate_with_datetime.csv",

@@ -67,6 +67,31 @@ def pull_data(data_configuration, device, sensor, container, columns_to_download
         participant_data['distance'] = df['distance']
         participant_data['device_id'] = df['device_id']
 
+    if sensor == "GALAXYFIT_SLEEP":
+        df = pd.DataFrame(csv_list, columns = colunm)
+        print(df.columns)
+        df.rename(columns = {'com.samsung.health.sleep.start_time' : 'local_date_time'}, inplace = True)
+        df.rename(columns = {'com.samsung.health.sleep.deviceuuid' : 'device_id'}, inplace = True)
+
+
+        participant_data = pd.DataFrame(df['local_date_time'], columns=['local_date_time'])
+        participant_data['device_id'] = df['device_id']
+        participant_data['sleep_duration'] = df['sleep_duration']
+        participant_data['sleep_cycle'] = df['sleep_cycle']
+        participant_data['mental_recovery'] = df['mental_recovery']
+        participant_data['physical_recovery'] = df['physical_recovery']
+        participant_data['movement_awakening'] = df['movement_awakening']
+
+    if sensor == "GALAXYFIT_SLEEPSTAGE":
+        df = pd.DataFrame(csv_list, columns = colunm)
+        print(df.columns)
+        df.rename(columns = {'start_time' : 'local_date_time'}, inplace = True)
+        df.rename(columns = {'deviceuuid' : 'device_id'}, inplace = True)
+
+        participant_data = pd.DataFrame(df['local_date_time'], columns=['local_date_time'])
+        participant_data['device_id'] = df['device_id']
+        participant_data['sleepstage'] = df['stage']
+
     len = participant_data.shape[0]
     print(len)
 

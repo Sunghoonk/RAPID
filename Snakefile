@@ -394,6 +394,24 @@ for provider in config["GALAXYFIT_STEPCOUNT"]["PROVIDERS"].keys():
         files_to_compute.extend(expand("data/processed/features/{pid}/all_sensor_features.csv", pid=config["PIDS"]))
         files_to_compute.append("data/processed/features/all_participants/all_sensor_features.csv")
 
+for provider in config["GALAXYFIT_SLEEP"]["PROVIDERS"].keys():
+    if config["GALAXYFIT_SLEEP"]["PROVIDERS"][provider]["COMPUTE"]:
+        files_to_compute.extend(expand("data/raw/{pid}/galaxyfit_sleep_raw.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/raw/{pid}/galaxyfit_sleep_with_datetime.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/interim/{pid}/galaxyfit_sleep_features/galaxyfit_sleep_{language}_{provider_key}.csv", pid=config["PIDS"], language=get_script_language(config["GALAXYFIT_SLEEP"]["PROVIDERS"][provider]["SRC_SCRIPT"]), provider_key=provider.lower()))
+        files_to_compute.extend(expand("data/processed/features/{pid}/galaxyfit_sleep.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/processed/features/{pid}/all_sensor_features.csv", pid=config["PIDS"]))
+        files_to_compute.append("data/processed/features/all_participants/all_sensor_features.csv")
+
+for provider in config["GALAXYFIT_SLEEPSTAGE"]["PROVIDERS"].keys():
+    if config["GALAXYFIT_SLEEPSTAGE"]["PROVIDERS"][provider]["COMPUTE"]:
+        files_to_compute.extend(expand("data/raw/{pid}/galaxyfit_sleepstage_raw.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/raw/{pid}/galaxyfit_sleepstage_with_datetime.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/interim/{pid}/galaxyfit_sleepstage_features/galaxyfit_sleepstage_{language}_{provider_key}.csv", pid=config["PIDS"], language=get_script_language(config["GALAXYFIT_SLEEPSTAGE"]["PROVIDERS"][provider]["SRC_SCRIPT"]), provider_key=provider.lower()))
+        files_to_compute.extend(expand("data/processed/features/{pid}/galaxyfit_sleepstage.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/processed/features/{pid}/all_sensor_features.csv", pid=config["PIDS"]))
+        files_to_compute.append("data/processed/features/all_participants/all_sensor_features.csv")
+
 # for apple
 for provider in config["APPLE_HEARTRATE"]["PROVIDERS"].keys():
     if config["APPLE_HEARTRATE"]["PROVIDERS"][provider]["COMPUTE"]:

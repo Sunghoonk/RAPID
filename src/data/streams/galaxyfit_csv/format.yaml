@@ -1,5 +1,5 @@
-GALAXYFIT_HEARTRATE: 
-  RAPIDS_COLUMN_MAPPINGS:
+GALAXYFIT_HEARTRATE:
+  RAPIDS_COLUMN_MAPPINGS: 
     TIMESTAMP: FLAG_TO_MUTATE
     LOCAL_DATE_TIME: local_date_time
     DEVICE_ID: device_id
@@ -19,3 +19,31 @@ GALAXYFIT_STEPCOUNT:
   MUTATION:
     COLUMN_MAPPINGS:
     SCRIPTS: 
+      - src/data/streams/mutations/galaxyfit/add_zero_timestamp.py
+
+GALAXYFIT_SLEEP: 
+  RAPIDS_COLUMN_MAPPINGS:
+    TIMESTAMP: FLAG_TO_MUTATE
+    LOCAL_DATE_TIME: local_date_time
+    DEVICE_ID: device_id
+    DURATION: sleep_duration
+    CYCLE: sleep_cycle
+    MENTAL_RECOVERY: mental_recovery
+    PHYSICAL_RECOVERY: physical_recovery
+    MOVEMENT_AWAKENING: movement_awakening
+  MUTATION:
+    COLUMN_MAPPINGS:
+    SCRIPTS: 
+      - src/data/streams/mutations/galaxyfit/add_zero_timestamp.py
+
+GALAXYFIT_SLEEPSTAGE: 
+  RAPIDS_COLUMN_MAPPINGS:
+    TIMESTAMP: FLAG_TO_MUTATE
+    LOCAL_DATE_TIME: local_date_time
+    DEVICE_ID: device_id
+    SLEEPSTAGE: sleepstage
+  MUTATION:
+    COLUMN_MAPPINGS:
+    SCRIPTS: 
+      - src/data/streams/mutations/galaxyfit/add_zero_timestamp.py
+

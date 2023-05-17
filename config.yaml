@@ -575,7 +575,7 @@ HEATMAP_FEATURE_CORRELATION_MATRIX:
   CORR_METHOD: "pearson" # choose from {"pearson", "kendall", "spearman"}
 
 LINE_FEATURE:
-  PLOT: True
+  PLOT: False
  
 ########################################################################################################################
 #                                                    Data Cleaning                                                     #
@@ -632,7 +632,7 @@ GALAXYFIT_HEARTRATE:
   CONTAINER: heart_rate.csv
   PROVIDERS:
     RAPIDS:
-      COMPUTE: True
+      COMPUTE: False
       FEATURES: ["maxrestinghr", "minrestinghr"] 
       # FEATURES: ["maxrestinghr", "minrestinghr", "avgrestinghr", "medianrestinghr", "moderestinghr", "stdrestinghr", "diffmaxmoderestinghr", "diffminmoderestinghr", "entropyrestinghr"] 
       SRC_SCRIPT: src/features/galaxyfit_heartrate/rapids/main.py
@@ -644,6 +644,22 @@ GALAXYFIT_STEPCOUNT:
       COMPUTE: False
       FEATURES: [] 
       SRC_SCRIPT: src/features/galaxyfit_stepcount/rapids/main.py
+
+GALAXYFIT_SLEEP:
+  CONTAINER: sleep.csv
+  PROVIDERS:
+    RAPIDS:
+      COMPUTE: False
+      FEATURES: [] 
+      SRC_SCRIPT: src/features/galaxyfit_sleep/rapids/main.py
+
+GALAXYFIT_SLEEPSTAGE:
+  CONTAINER: sleep_stage.csv
+  PROVIDERS:
+    RAPIDS:
+      COMPUTE: True
+      FEATURES: [] 
+      SRC_SCRIPT: src/features/galaxyfit_sleepstage/rapids/main.py
 
 ########################################################################################################################
 #                                                AppleWatch                                                            #
