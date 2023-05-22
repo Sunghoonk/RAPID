@@ -5,8 +5,8 @@
 # See https://www.rapids.science/latest/setup/configuration/#participant-files
 # PIDS: [example01] # test fitbit
 # PIDS: [empatica] # test empatica
-PIDS: [person1] # test galaxyfit
-# PIDS: [apple] # test apple
+# PIDS: [person1] # test galaxyfit
+PIDS: [apple] # test apple
 # PIDS: [p01] # test phone
 
 # See https://www.rapids.science/latest/setup/configuration/#automatic-creation-of-participant-files
@@ -657,9 +657,17 @@ GALAXYFIT_SLEEPSTAGE:
   CONTAINER: sleep_stage.csv
   PROVIDERS:
     RAPIDS:
-      COMPUTE: True
+      COMPUTE: False
       FEATURES: [] 
       SRC_SCRIPT: src/features/galaxyfit_sleepstage/rapids/main.py
+
+GALAXYFIT_EXERCISE: 
+  CONTAINER: exercise.csv
+  PROVIDERS:
+    RAPIDS:
+      COMPUTE: False
+      FEATURES: [] 
+      SRC_SCRIPT: src/features/galaxyfit_exercise/rapids/main.py
 
 ########################################################################################################################
 #                                                AppleWatch                                                            #
@@ -672,7 +680,6 @@ APPLE_DATA_STREAMS:
   apple_csv:
     FOLDER: data/external/apple_csv
 
-
 APPLE_HEARTRATE:
   CONTAINER: apple_health.csv
   PROVIDERS:
@@ -680,3 +687,11 @@ APPLE_HEARTRATE:
       COMPUTE: False
       FEATURES: [] 
       SRC_SCRIPT: src/features/apple_heartrate/rapids/main.py
+
+APPLE_STEPCOUNT:
+  CONTAINER: apple_health.csv
+  PROVIDERS:
+    RAPIDS:
+      COMPUTE: True
+      FEATURES: [] 
+      SRC_SCRIPT: src/features/apple_stepcount/rapids/main.py

@@ -993,6 +993,19 @@ rule galaxyfit_sleepstage_python_features:
     script:
         "../src/features/entry.py"
 
+rule galaxyfit_exercise_python_features:
+    input:
+        sensor_data = "data/raw/{pid}/galaxyfit_exercise_with_datetime.csv",
+        time_segments_labels = "data/interim/time_segments/{pid}_time_segments_labels.csv"
+    params:
+        provider = lambda wildcards: config["GALAXYFIT_EXERCISE"]["PROVIDERS"][wildcards.provider_key.upper()],
+        provider_key = "{provider_key}",
+        sensor_key = "galaxyfit_exercise"
+    output:
+        "data/interim/{pid}/galaxyfit_exercise_features/galaxyfit_exercise_python_{provider_key}.csv"
+    script:
+        "../src/features/entry.py"
+
 rule apple_heartrate_python_features:
     input:
         sensor_data = "data/raw/{pid}/apple_heartrate_with_datetime.csv",
@@ -1003,6 +1016,19 @@ rule apple_heartrate_python_features:
         sensor_key = "apple_heartrate"
     output:
         "data/interim/{pid}/apple_heartrate_features/apple_heartrate_python_{provider_key}.csv"
+    script:
+        "../src/features/entry.py"
+
+rule apple_stepcount_python_features:
+    input:
+        sensor_data = "data/raw/{pid}/apple_stepcount_with_datetime.csv",
+        time_segments_labels = "data/interim/time_segments/{pid}_time_segments_labels.csv"
+    params:
+        provider = lambda wildcards: config["APPLE_HEARTRATE"]["PROVIDERS"][wildcards.provider_key.upper()],
+        provider_key = "{provider_key}",
+        sensor_key = "apple_stepcount"
+    output:
+        "data/interim/{pid}/apple_stepcount_features/apple_stepcount_python_{provider_key}.csv"
     script:
         "../src/features/entry.py"
 

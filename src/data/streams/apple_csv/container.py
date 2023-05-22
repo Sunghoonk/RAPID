@@ -51,7 +51,12 @@ def pull_data(data_configuration, device, sensor, container, columns_to_download
 
     participant_data = pd.DataFrame(df['timestamp'], columns=['timestamp'])
     participant_data['device_id'] = df['device_id']
-    participant_data['heartrate'] = df[ df['type'] == "HeartRate" ]['value']
+
+    if sensor == "APPLE_HEARTRATE":
+      participant_data['heartrate'] = df[ df['type'] == "HeartRate" ]['value']
+
+    if sensor == "APPLE_STEPCOUNT":
+      participant_data['stepcount'] = df[ df['type'] == "StepCount" ]['value']
 
     s = participant_data['device_id'][0]
     idx = s.find('HKDevice') + 10

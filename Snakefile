@@ -412,6 +412,15 @@ for provider in config["GALAXYFIT_SLEEPSTAGE"]["PROVIDERS"].keys():
         files_to_compute.extend(expand("data/processed/features/{pid}/all_sensor_features.csv", pid=config["PIDS"]))
         files_to_compute.append("data/processed/features/all_participants/all_sensor_features.csv")
 
+for provider in config["GALAXYFIT_EXERCISE"]["PROVIDERS"].keys():
+    if config["GALAXYFIT_EXERCISE"]["PROVIDERS"][provider]["COMPUTE"]:
+        files_to_compute.extend(expand("data/raw/{pid}/galaxyfit_exercise_raw.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/raw/{pid}/galaxyfit_exercise_with_datetime.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/interim/{pid}/galaxyfit_exercise_features/galaxyfit_exercise_{language}_{provider_key}.csv", pid=config["PIDS"], language=get_script_language(config["GALAXYFIT_EXERCISE"]["PROVIDERS"][provider]["SRC_SCRIPT"]), provider_key=provider.lower()))
+        files_to_compute.extend(expand("data/processed/features/{pid}/galaxyfit_exercise.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/processed/features/{pid}/all_sensor_features.csv", pid=config["PIDS"]))
+        files_to_compute.append("data/processed/features/all_participants/all_sensor_features.csv")
+
 # for apple
 for provider in config["APPLE_HEARTRATE"]["PROVIDERS"].keys():
     if config["APPLE_HEARTRATE"]["PROVIDERS"][provider]["COMPUTE"]:
@@ -422,6 +431,14 @@ for provider in config["APPLE_HEARTRATE"]["PROVIDERS"].keys():
         files_to_compute.extend(expand("data/processed/features/{pid}/all_sensor_features.csv", pid=config["PIDS"]))
         files_to_compute.append("data/processed/features/all_participants/all_sensor_features.csv")
 
+for provider in config["APPLE_STEPCOUNT"]["PROVIDERS"].keys():
+    if config["APPLE_STEPCOUNT"]["PROVIDERS"][provider]["COMPUTE"]:
+        files_to_compute.extend(expand("data/raw/{pid}/apple_stepcount_raw.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/raw/{pid}/apple_stepcount_with_datetime.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/interim/{pid}/apple_stepcount_features/apple_stepcount_{language}_{provider_key}.csv", pid=config["PIDS"], language=get_script_language(config["APPLE_STEPCOUNT"]["PROVIDERS"][provider]["SRC_SCRIPT"]), provider_key=provider.lower()))
+        files_to_compute.extend(expand("data/processed/features/{pid}/apple_stepcount.csv", pid=config["PIDS"]))
+        files_to_compute.extend(expand("data/processed/features/{pid}/all_sensor_features.csv", pid=config["PIDS"]))
+        files_to_compute.append("data/processed/features/all_participants/all_sensor_features.csv")
 
 # Visualization for Data Exploration
 if config["HISTOGRAM_PHONE_DATA_YIELD"]["PLOT"]:

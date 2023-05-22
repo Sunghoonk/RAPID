@@ -47,3 +47,15 @@ GALAXYFIT_SLEEPSTAGE:
     SCRIPTS: 
       - src/data/streams/mutations/galaxyfit/add_zero_timestamp.py
 
+GALAXYFIT_EXERCISE: 
+  RAPIDS_COLUMN_MAPPINGS:
+    TIMESTAMP: FLAG_TO_MUTATE
+    LOCAL_DATE_TIME: local_date_time
+    DEVICE_ID: device_id
+    CALORIE: calorie
+    DISTANCE: distance
+    DURATION: duration
+  MUTATION:
+    COLUMN_MAPPINGS:
+    SCRIPTS: 
+      - src/data/streams/mutations/galaxyfit/add_zero_timestamp.py

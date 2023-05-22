@@ -92,6 +92,21 @@ def pull_data(data_configuration, device, sensor, container, columns_to_download
         participant_data['device_id'] = df['device_id']
         participant_data['sleepstage'] = df['stage']
 
+    if sensor == "GALAXYFIT_EXERCISE":
+        df = pd.DataFrame(csv_list, columns = colunm)
+        df.rename(columns = {'com.samsung.health.exercise.start_time' : 'local_date_time'}, inplace = True)
+        df.rename(columns = {'com.samsung.health.exercise.deviceuuid' : 'device_id'}, inplace = True)
+        df.rename(columns = {'com.samsung.health.exercise.calorie' : 'calorie'}, inplace = True)
+        df.rename(columns = {'com.samsung.health.exercise.distance' : 'distance'}, inplace = True)
+        df.rename(columns = {'com.samsung.health.exercise.duration' : 'duration'}, inplace = True)
+
+        participant_data = pd.DataFrame(df['local_date_time'], columns=['local_date_time'])
+        participant_data['device_id'] = df['device_id']
+        participant_data['calorie'] = df['calorie']
+        participant_data['distance'] = df['distance']
+        participant_data['duration'] = df['duration']
+        # participant_data.set_index('timestamp', inplace=True)
+
     len = participant_data.shape[0]
     print(len)
 
