@@ -5,8 +5,8 @@
 # See https://www.rapids.science/latest/setup/configuration/#participant-files
 # PIDS: [example01] # test fitbit
 # PIDS: [empatica] # test empatica
-# PIDS: [person1] # test galaxyfit
-PIDS: [apple] # test apple
+PIDS: [person1] # test galaxyfit
+# PIDS: [apple] # test apple
 # PIDS: [p01] # test phone
 
 # See https://www.rapids.science/latest/setup/configuration/#automatic-creation-of-participant-files
@@ -632,8 +632,8 @@ GALAXYFIT_HEARTRATE:
   CONTAINER: heart_rate.csv
   PROVIDERS:
     RAPIDS:
-      COMPUTE: False
-      FEATURES: ["maxrestinghr", "minrestinghr"] 
+      COMPUTE: True
+      FEATURES: [] 
       # FEATURES: ["maxrestinghr", "minrestinghr", "avgrestinghr", "medianrestinghr", "moderestinghr", "stdrestinghr", "diffmaxmoderestinghr", "diffminmoderestinghr", "entropyrestinghr"] 
       SRC_SCRIPT: src/features/galaxyfit_heartrate/rapids/main.py
 
@@ -692,6 +692,6 @@ APPLE_STEPCOUNT:
   CONTAINER: apple_health.csv
   PROVIDERS:
     RAPIDS:
-      COMPUTE: True
+      COMPUTE: False
       FEATURES: [] 
       SRC_SCRIPT: src/features/apple_stepcount/rapids/main.py
